@@ -1,28 +1,52 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ShoppingList />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ShoppingList from './components/ShoppingList.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    ShoppingList
   }
 }
 </script>
 
 <style>
+ @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+ @import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
+
+body {
+  background-color: rgb(188, 247, 111);
+  font-family: 'Montserrat', sans-serif;
+  display: grid;
+  grid-template-rows: auto;
+  justify-items: center;
+  padding-top: 50px;
+}
+body, html {
+  margin: 0;
+  height: 100%;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    width: 30%;
+}
+
+nav {
+  padding: 20px 20px 20px 0;
+}
+
+nav a {
+  padding: 10px;
+  text-decoration: none;
+  background: #fff;
+  border-radius: 3px;
+  color: rgb(0, 110, 255);
+  font-weight: bold;
+  margin-right: 15px;
 }
 </style>
+
