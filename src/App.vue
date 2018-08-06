@@ -1,16 +1,28 @@
 <template>
   <div id="app">
-    <ShoppingList />
+    <router-view></router-view>    
   </div>
 </template>
 
 <script>
 import ShoppingList from './components/ShoppingList.vue'
+import Welcome from './components/Welcome.vue'
 
 export default {
   name: 'app',
   components: {
-    ShoppingList
+    ShoppingList,
+    Welcome
+  },
+  data() {
+        return {
+        listName: ''
+    }
+  },
+  methods: {
+      nameList() {
+          this.listName = listName;
+      }
   }
 }
 </script>
@@ -32,7 +44,7 @@ body, html {
   height: 100%;
 }
 #app {
-    width: 30%;
+    width: 600px;
 }
 
 nav {

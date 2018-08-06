@@ -1,20 +1,28 @@
 <template>
   <div class="hello">
     <div class="holder">
-
-      <ul>
-        <li v-for="(data, index) in listItems" :key='index'>{{ data.listItem }}  {{ data.sku }}  {{ data.price }}</li>
-      </ul>
+      <p>{{ listName }}</p>
+      <form>
+        <input type="text" placeholder="Enter an item" v-model="listItem.item">
+        <input type="text" placeholder="Enter a sku" v-model="listItem.sku">
+        <input type="text" placeholder="Enter a price" v-model="listItem.price">
+        <button class="add__button" @click.prevent="addItem">
+          Add an item
+        </button>
+      </form>
 
       <br><br>
 
-      <form @submit.prevent="addItem">
-        <input type="text" placeholder="Enter an item" v-model="listItem">
-        <!--
-        <input type="text" placeholder="Enter a sku" v-model="sku">
-        <input type="text" placeholder="Enter a price" v-model="price"> -->
-        <button class="add__button"><i class="ion-ios-checkmark-outline"></i></button>
-      </form>
+      <ul>        
+          <li v-for="(data, index) in listItems" :key="index">{{ data.item }}, SKU: {{ data.sku }}, Price: {{ data.price }}
+            <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
+          </li>        
+      </ul>
+
+      <nav>
+        <router-link to="/welcome">Change name of Shopping List</router-link>
+      </nav>
+
     </div>
   </div>
 </template>
@@ -24,28 +32,26 @@ export default {
   name: 'ShoppingList',
   data() {
     return {
-      listItem: '',
-      listItems: [
-        { "listItem": "Milk", "sku": 123, "price": 3 }
-      ]
-    }
-    var input = getInput();
-
+      listItem: {
+        item: '',
+        sku: '',
+        price: 0 
+      },
+      listItems: []      
+    }    
   },
   methods: {
-    getInput() {
-      return {
-        listItem: this.listItem,
-        sku: this.sku,
-        price: this.price
-      }
-    },
     addItem() {
-      this.listItems.push(input);
-      /*
-      this.listItem = '';
+      this.listItems.push(
+        {item: this.listItem.item, sku: this.listItem.sku, price: this.listItem.price}
+        );
+      
+      this.item = '';
       this.sku = '';
-      this.price = ''; */
+      this.price = '';
+    },
+    remove(id) {
+      this.listItems.splice(id,1);
     }
   }
 }
@@ -53,6 +59,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
 .holder {
     background: rgb(188, 247, 111);
   }
@@ -64,7 +72,7 @@ export default {
   }
   
   ul li {
-    padding: 10px;
+    padding: 20px;
     font-size: 1em;
     background-color: white;
     color: #3E5252;
@@ -81,14 +89,14 @@ export default {
   }
 
   input {   
-    width: calc(100% - 20px);
+    width: 130px;
     padding: 10px;
     font-size: 1em;
     background-color: lightgrey;
     color: #687F7F;
   }
 
-   .alert {
+  .alert {
     background: #fdf2ce;
     font-weight: bold;
     display: inline-block;
@@ -118,14 +126,16 @@ i {
 }
 
 .add__button {
-    font-size: 35px;
-    background: none;
-    border: none;
-    color: rgb(3, 119, 65);
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 1.1;
-    margin-left: 10px;
+  width: 130px;
+  font-size: 1em;
+  background: rgb(3, 119, 65);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.1;
+  margin-left: 0px;
+  padding: 10px;
 }
 </style>
