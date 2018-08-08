@@ -1,29 +1,18 @@
 <template>
   <div id="app">
-    <router-view></router-view>    
+    <ShoppingList />   
   </div>
 </template>
 
 <script>
 import ShoppingList from './components/ShoppingList.vue'
-import Welcome from './components/Welcome.vue'
 
 export default {
   name: 'app',
   components: {
-    ShoppingList,
-    Welcome
-  },
-  data() {
-        return {
-        listName: ''
-    }
-  },
-  methods: {
-      nameList() {
-          this.listName = listName;
-      }
+    ShoppingList
   }
+
 }
 </script>
 
@@ -32,7 +21,7 @@ export default {
  @import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 
 body {
-  background-color: rgb(188, 247, 111);
+  background-color: rgb(249, 244, 98);
   font-family: 'Montserrat', sans-serif;
   display: grid;
   grid-template-rows: auto;
@@ -45,20 +34,6 @@ body, html {
 }
 #app {
     width: 600px;
-}
-
-nav {
-  padding: 20px 20px 20px 0;
-}
-
-nav a {
-  padding: 10px;
-  text-decoration: none;
-  background: #fff;
-  border-radius: 3px;
-  color: rgb(0, 110, 255);
-  font-weight: bold;
-  margin-right: 15px;
 }
 </style>
 

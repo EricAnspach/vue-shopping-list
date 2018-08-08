@@ -1,27 +1,42 @@
 <template>
   <div class="hello">
     <div class="holder">
-      <p>{{ listName }}</p>
-      <form>
-        <input type="text" placeholder="Enter an item" v-model="listItem.item">
-        <input type="text" placeholder="Enter a sku" v-model="listItem.sku">
-        <input type="text" placeholder="Enter a price" v-model="listItem.price">
-        <button class="add__button" @click.prevent="addItem">
-          Add an item
-        </button>
-      </form>
+      
+      <div>
+        <h1 class="page_title">The Shopping List App</h1>
 
-      <br><br>
+      </div>
+      <div>
+        <form v-if="!isNamed">
+            <input class="name_input" type="text" placeholder="Enter the name of your shopping list" v-model="listName">
+            <button class="name__button" @click.prevent="listNamed">
+                Enter
+            </button>                       
+        </form>        
+      </div>
 
-      <ul>        
-          <li v-for="(data, index) in listItems" :key="index">{{ data.item }}, SKU: {{ data.sku }}, Price: {{ data.price }}
-            <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
-          </li>        
-      </ul>
+      <div v-if="isNamed">
+        <h1>{{ listName }}</h1> 
+        <form>
+          <input type="text" placeholder="Enter an item" v-model="listItem.item">
+          <input type="text" placeholder="Enter a sku" v-model="listItem.sku">
+          <input type="text" placeholder="Enter a price" v-model="listItem.price">
+          <button class="add__button" @click.prevent="addItem">
+            Add an item
+          </button>
+        </form>
 
-      <nav>
-        <router-link to="/welcome">Change name of Shopping List</router-link>
-      </nav>
+        <br><br>
+
+        <ul>        
+            <li v-for="(data, index) in listItems" :key="index">{{ data.item }}, SKU: {{ data.sku }}, Price: {{ data.price }}
+              <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
+            </li>        
+        </ul>
+
+        <br><br>
+        <button class="change__button" v-on:click="clearName">Change name of Shopping List</button>
+      </div>
 
     </div>
   </div>
@@ -32,12 +47,14 @@ export default {
   name: 'ShoppingList',
   data() {
     return {
+      listName: '',
       listItem: {
         item: '',
         sku: '',
-        price: 0 
+        price: ''
       },
-      listItems: []      
+      listItems: [],
+      isNamed: false    
     }    
   },
   methods: {
@@ -46,12 +63,19 @@ export default {
         {item: this.listItem.item, sku: this.listItem.sku, price: this.listItem.price}
         );
       
-      this.item = '';
-      this.sku = '';
-      this.price = '';
+      this.listItem.item = '';
+      this.listItem.sku = '';
+      this.listItem.price = '';
     },
     remove(id) {
       this.listItems.splice(id,1);
+    },
+    listNamed() {
+      this.isNamed = true;
+    },
+    clearName() {
+      this.isNamed = false;
+      this.listName = '';
     }
   }
 }
@@ -62,62 +86,50 @@ export default {
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
 .holder {
-    background: rgb(188, 247, 111);
-  }
+  background: rgb(249, 244, 98);
+}
 
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-  
-  ul li {
-    padding: 20px;
-    font-size: 1em;
-    background-color: white;
-    color: #3E5252;
-  }
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 
-  p {
-    text-align:center;
-    padding: 30px 0;
-    color: gray;
-  }
+ul li {
+  padding: 20px;
+  font-size: 1em;
+  background-color: white;
+  color: black;
+}
 
-  .container {
-    box-shadow: 0px 0px 40px lightgray;
-  }
+p {
+  text-align:center;
+  padding: 30px 0;
+  color: gray;
+}
 
-  input {   
-    width: 130px;
-    padding: 10px;
-    font-size: 1em;
-    background-color: lightgrey;
-    color: #687F7F;
-  }
+.container {
+  box-shadow: 0px 0px 40px lightgray;
+}
 
-  .alert {
-    background: #fdf2ce;
-    font-weight: bold;
-    display: inline-block;
-    padding: 5px;
-    margin-top: -20px;
-  }
+.page_title {
+  font-size: 3em;
+}
 
+input {   
+  width: 130px;
+  padding: 10px;
+  font-size: 1em;
+  background-color: lightgrey;
+  color: black;
+}
 
-
-  @keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-
-
+.name_input {   
+  width: 300px;
+  padding: 10px;
+  font-size: 1em;
+  background-color: lightgrey;
+  color: black;
 }
 
 i {
@@ -128,7 +140,35 @@ i {
 .add__button {
   width: 130px;
   font-size: 1em;
-  background: rgb(3, 119, 65);
+  background: rgb(243, 139, 38);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.1;
+  margin-left: 0px;
+  padding: 10px;
+}
+
+.name__button {
+  width: 130px;
+  font-size: 1em;
+  background: rgb(243, 139, 38);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.1;
+  margin-left: 0px;
+  padding: 10px;
+}
+
+.change__button {
+  width: 600px;
+  font-size: 1em;
+  background: rgb(243, 139, 38);
   border: none;
   color: white;
   cursor: pointer;
