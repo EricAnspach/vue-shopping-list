@@ -19,11 +19,15 @@
         <h1>{{ listName }}</h1> 
         <form>
           <input type="text" placeholder="Enter an item" v-model="listItem.item">
-          <input type="text" placeholder="Enter a sku" v-model="listItem.sku">
-          <input type="text" placeholder="Enter a price" v-model="listItem.price">
+          <input type="text" placeholder="Enter a sku" v-model="listItem.sku" 
+            v-validate="'digits:6'" name="sku">
+          <input type="text" placeholder="Enter a price" v-model="listItem.price" 
+            v-validate="'numeric'" data-vv-as="price" name="numeric_field">
           <button class="add__button" @click.prevent="addItem">
             Add an item
           </button>
+          <p class="alert" v-if="errors.has('sku')">{{ errors.first('sku') }}</p>
+          <p class="alert" v-if="errors.has('numeric_field')">{{ errors.first('numeric_field') }}</p>
         </form>
 
         <br><br>
@@ -106,6 +110,11 @@ p {
   text-align:center;
   padding: 30px 0;
   color: gray;
+}
+
+.alert {
+  padding: 0px;
+  color: red;
 }
 
 .container {
