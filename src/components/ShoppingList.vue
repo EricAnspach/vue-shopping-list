@@ -37,6 +37,9 @@
               <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
             </li>        
         </ul>
+        <hr>
+        <p></p>
+        <p>{{ total }}</p>
 
         <br><br>
         <button class="change__button" v-on:click="clearName">Change name of Shopping List</button>
@@ -58,7 +61,10 @@ export default {
         price: ''
       },
       listItems: [],
-      isNamed: false    
+      isNamed: false,
+      total: 0,
+      addPrice: 0,
+      removePrice: 0
     }    
   },
   methods: {
@@ -67,12 +73,18 @@ export default {
         {item: this.listItem.item, sku: this.listItem.sku, price: this.listItem.price}
         );
       
+
+      this.addPrice = parseInt(this.listItem.price, 10);
+      console.log(this.addPrice);
+      this.total = this.total += this.addPrice;
       this.listItem.item = '';
       this.listItem.sku = '';
       this.listItem.price = '';
     },
     remove(id) {
+      removePrice = this.listItems[id.price];
       this.listItems.splice(id,1);
+      this.total = this.total -= this.removePrice;
     },
     listNamed() {
       this.isNamed = true;
