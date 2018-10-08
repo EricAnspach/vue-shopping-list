@@ -33,15 +33,15 @@
         <br><br>
 
         <ul>        
-            <li v-for="(data, index) in listItems" :key="index">{{ data.item }}, SKU: {{ data.sku }}, Price: {{ data.price }}
-              <i class="fa fa-minus-circle" v-on:click="remove(index)"></i>
+            <li v-for="(data, index) in listItems" :key="index">{{ data.item }}, SKU: {{ data.sku }}, Price: ${{ data.price }}
+              <i class="fa fa-minus-circle" v-on:click="removeItem(index)"></i>
             </li>        
         </ul>
         <hr>
-        <p></p>
-        <p>{{ total }}</p>
-
-        <br><br>
+        <div class="total_price">
+          <p>Total price of items: ${{ total }}</p>
+        </div>
+        
         <button class="change__button" v-on:click="clearName">Change name of Shopping List</button>
       </div>
 
@@ -76,15 +76,14 @@ export default {
 
       this.addPrice = parseInt(this.listItem.price, 10);
       console.log(this.addPrice);
-      this.total = this.total += this.addPrice;
+      this.total += this.addPrice;
       this.listItem.item = '';
       this.listItem.sku = '';
       this.listItem.price = '';
     },
-    remove(id) {
-      removePrice = this.listItems[id.price];
+    removeItem(id) {
+      this.total -= this.listItems[id].price;
       this.listItems.splice(id,1);
-      this.total = this.total -= this.removePrice;
     },
     listNamed() {
       this.isNamed = true;
@@ -120,8 +119,8 @@ ul li {
 
 p {
   text-align:center;
-  padding: 30px 0;
-  color: gray;
+  padding: 10px 0;
+  color: black;
 }
 
 .alert {
@@ -198,5 +197,10 @@ i {
   line-height: 1.1;
   margin-left: 0px;
   padding: 10px;
+}
+
+.total_price {
+  background-color: yellowgreen;
+  color: black;
 }
 </style>
